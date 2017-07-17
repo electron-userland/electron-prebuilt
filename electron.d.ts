@@ -1,4 +1,4 @@
-// Type definitions for Electron 1.7.4
+// Type definitions for Electron 1.7.5
 // Project: http://electron.atom.io/
 // Definitions by: The Electron Team <https://github.com/electron/electron>
 // Definitions: https://github.com/electron/electron-typescript-definitions
@@ -475,6 +475,12 @@ declare namespace Electron {
      * Clears the recent documents list.
      */
     clearRecentDocuments(): void;
+    /**
+     * By default, Chromium disables 3D APIs (e.g. WebGL) until restart on a per domain
+     * basis if the GPU processes crashes too frequently. This function disables that
+     * behaviour. This method can only be called before app is ready.
+     */
+    disableDomainBlockingFor3DAPIs(): void;
     /**
      * Disables hardware acceleration for current app. This method can only be called
      * before app is ready.
@@ -6129,6 +6135,11 @@ declare namespace Electron {
      */
     titleBarStyle?: ('default' | 'hidden' | 'hidden-inset' | 'hiddenInset' | 'customButtonsOnHover');
     /**
+     * Shows the title in the tile bar in full screen mode on macOS for all
+     * titleBarStyle options. Default is false.
+     */
+    fullscreenWindowTitle?: boolean;
+    /**
      * Use WS_THICKFRAME style for frameless windows on Windows, which adds standard
      * window frame. Setting it to false will remove window shadow and window
      * animations. Default is true.
@@ -6927,7 +6938,12 @@ declare namespace Electron {
      */
     title: string;
     /**
-     * The body text of the notification, which will be displayed below the title
+     * A subtitle for the notification, which will be displayed below the title.
+     */
+    subtitle: string;
+    /**
+     * The body text of the notification, which will be displayed below the title or
+     * subtitle
      */
     body: string;
     /**
@@ -7979,7 +7995,8 @@ declare namespace Electron {
      */
     contextIsolation?: boolean;
     /**
-     * Whether to use native window.open(). Defaults to false.
+     * Whether to use native window.open(). Defaults to false. This option is currently
+     * experimental.
      */
     nativeWindowOpen?: boolean;
     /**
