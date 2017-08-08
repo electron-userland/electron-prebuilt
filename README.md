@@ -1,114 +1,42 @@
 # electron-prebuilt
 
-[![Travis build status](http://img.shields.io/travis/electron-userland/electron-prebuilt.svg?style=flat)](http://travis-ci.org/electron-userland/electron-prebuilt)
-[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/hxcd9vcdn9hr0b3y/branch/master?svg=true)](https://ci.appveyor.com/project/electron-bot/electron-prebuilt/branch/master)
+This project has been merged into the
+[electron/electron](https://github.com/electron/electron/tree/master/npm)
+repository, and the `electron` module is now published to npm as part of the
+Electron release process.
 
-[![badge](https://nodei.co/npm/electron.png?downloads=true)](https://www.npmjs.com/package/electron)
+If you're having trouble installing or using Electron, please 
+[file an issue on the electron/electron repo](https://github.com/electron/electron/issues?utf8=%E2%9C%93&q=is%3Aissue%20is%3Aopen%20install%20).
 
-Install [Electron](https://github.com/electron/electron) prebuilt binaries for
-command-line use using npm. This module helps you easily install the `electron`
-command for use on the command line without having to compile anything.
+## Backstory
 
-[Electron](http://electron.atom.io) is a JavaScript runtime that bundles Node.js
-and Chromium. You use it similar to the `node` command on the command line for
-executing JavaScript programs. For more info you can read [this intro blog post](http://maxogden.com/electron-fundamentals.html)
-or dive into the [Electron documentation](http://electron.atom.io/docs).
+In the early days of Electron, back when it was still called `atom-shell`, there 
+was no module published to npm, nor was there even an Electron team at GitHub.
+Electron was used primarly by the [Atom](https://atom.io/) team, and it was up 
+to early adopters to manually download compiled binary builds of Electron for 
+use in their apps.
 
-## Installation
+In early 2015 [Max Ogden](https://github.com/maxogden) created 
+[`electron-download`](https://github.com/electron-userland/electron-download) 
+and `electron-prebuilt`, two npm modules to simplify the process of installing 
+Electron. These tools quickly became de facto standards in the Electron 
+community.
 
-**Note** As of version 1.3.1, this package is published to npm under two names:
-`electron` and `electron-prebuilt`. You can currently use either name, but
-`electron` is recommended, as the `electron-prebuilt` name is deprecated, and
-will only be published until the end of 2016.
+Shortly after `electron-prebuilt` was written, 
+[John Muhl](https://github.com/johnmuhl/) created
+[electron-prebuilt-updater](https://github.com/electron/electron-prebuilt-updater), 
+a Heroku app to publish the the prebuilt module to npm automatically as new 
+versions of Electron were published on GitHub.
 
-Download and install the latest build of Electron for your OS and add it to your
-project's `package.json` as a `devDependency`:
+Fast forward to mid-2017, and GitHub now has a team working full-time on 
+Electron. We are working towards a more regular release cadence, 
+and are incrementally documenting and [improving our release process](https://github.com/electron/electron/blob/master/docs/development/releasing.md). 
+As we've added support for things like 
+[TypeScript definitions](https://electron.atom.io/blog/2017/06/01/typescript),
+it's been challening to work these additions into the `electron` -> `electron-prebuilt-updater` -> `electron-prebuilt` release flow.
 
-```shell
-npm install electron --save-dev
-```
-
-This is the preferred way to use Electron, as it doesn't require users to
-install Electron globally.
-
-You can also use the `-g` flag (global) to symlink it into your PATH:
-
-```shell
-npm install -g electron
-```
-
-If that command fails with an `EACCESS` error you may have to run it again with `sudo`:
-
-```shell
-sudo npm install -g electron
-```
-
-Now you can just run `electron` to run electron:
-
-```shell
-electron
-```
-
-If you need to use an HTTP proxy you can [set these environment variables](https://github.com/request/request/tree/f0c4ec061141051988d1216c24936ad2e7d5c45d#controlling-proxy-behaviour-using-environment-variables).
-
-If you want to change the architecture that is downloaded (e.g., `ia32` on an
-`x64` machine), you can use the `--arch` flag with npm install or set the
-`npm_config_arch` environment variable:
-
-```shell
-npm install --arch=ia32 electron
-```
-
-If you need to force a re-download of the asset and the SHASUM file set the `force_no_cache` enviroment variable to true.
-
-## About
-
-Works on Mac, Windows and Linux OSes that Electron supports (e.g. Electron
-[does not support Windows XP](https://github.com/electron/electron/issues/691)).
-
-The version numbers of this module match the version number of the [official
-Electron releases](https://github.com/electron/electron/releases), which
-[do not follow semantic versioning](http://electron.atom.io/docs/tutorial/electron-versioning/).
-
-This module is automatically released whenever a new version of Electron is
-released thanks to [electron-prebuilt-updater](https://github.com/electron/electron-prebuilt-updater),
-originally written by [John Muhl](https://github.com/johnmuhl/).
-
-## Usage
-
-First, you have to [write an Electron application](http://electron.atom.io/docs/tutorial/quick-start/).
-
-Then, you can run your app using:
-
-```shell
-electron your-app/
-```
-
-## Related modules
-
-- [electron-packager](https://github.com/electron-userland/electron-packager) -
-  Package and distribute your Electron app with OS-specific bundles
-  (.app, .exe etc)
-- [electron-builder](https://github.com/electron-userland/electron-builder) -
-  create installers
-- [menubar](https://github.com/maxogden/menubar) - high level way to create
-  menubar desktop applications with electron
-
-Find more at the [awesome-electron](https://github.com/sindresorhus/awesome-electron) list.
-
-## Programmatic usage
-
-Most people use this from the command line, but if you require `electron` inside
-your **Node app** (not your Electron app) it will return the file path to the
-binary. Use this to spawn Electron from Node scripts:
-
-```javascript
-var electron = require('electron')
-var proc = require('child_process')
-
-// will print something similar to /Users/maf/.../Electron
-console.log(electron)
-
-// spawn Electron
-var child = proc.spawn(electron)
-```
+To reduce the number of moving parts in the release process, we imported
+the `electron-prebuilt` codebase into [`electron`](https://github.com/electron/electron/tree/master/npm) itself, and have 
+[preserved the git history](https://github.com/electron/electron/pull/10172)
+to acknowledge the contributions of the 32 open-source community members who 
+have helped improve `electron-prebuilt` over the years.
