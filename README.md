@@ -33,7 +33,7 @@ Electron. We are working towards a more regular release cadence,
 and are incrementally documenting and [improving our release process](https://github.com/electron/electron/blob/master/docs/development/releasing.md). 
 As we've added support for things like 
 [TypeScript definitions](https://electron.atom.io/blog/2017/06/01/typescript),
-it's been challening to work these additions into the `electron` -> `electron-prebuilt-updater` -> `electron-prebuilt` release flow.
+it's been challenging to work these additions into the `electron` -> `electron-prebuilt-updater` -> `electron-prebuilt` release flow.
 
 To reduce the number of moving parts in the release process, we imported
 the `electron-prebuilt` codebase into [`electron`](https://github.com/electron/electron/tree/master/npm) itself, and have 
